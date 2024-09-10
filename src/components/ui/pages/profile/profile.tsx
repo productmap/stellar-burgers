@@ -35,32 +35,38 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            onPointerEnterCapture={() => {}}
+            onPointerLeaveCapture={() => {}}
           />
         </div>
         <div className='pb-6'>
           <Input
+            name={'email'}
             type={'email'}
             placeholder={'E-mail'}
-            onChange={handleInputChange}
             value={formValue.email}
-            name={'email'}
             error={false}
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            onChange={handleInputChange}
+            onPointerEnterCapture={() => {}}
+            onPointerLeaveCapture={() => {}}
           />
         </div>
         <div className='pb-6'>
           <Input
+            name={'password'}
             type={'password'}
             placeholder={'Пароль'}
-            onChange={handleInputChange}
             value={formValue.password}
-            name={'password'}
             error={false}
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            onChange={handleInputChange}
+            onPointerEnterCapture={() => {}}
+            onPointerLeaveCapture={() => {}}
           />
         </div>
         {isFormChanged && (

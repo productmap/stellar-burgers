@@ -21,14 +21,16 @@ export const ForgotPasswordUI: FC<PageUIProps> = ({
       >
         <div className='pb-6'>
           <Input
+            name='email'
             type='email'
             placeholder='Укажите e-mail'
-            onChange={(e) => setEmail(e.target.value)}
             value={email}
-            name='email'
             error={false}
             errorText=''
             size='default'
+            onChange={(e) => setEmail(e.target.value)}
+            onPointerEnterCapture={() => {}}
+            onPointerLeaveCapture={() => {}}
           />
         </div>
         <div className={`pb-6 ${styles.button}`}>

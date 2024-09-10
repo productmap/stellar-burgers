@@ -1,5 +1,5 @@
 import { ProfileUI } from '@ui-pages';
-import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FC, SyntheticEvent, useEffect, useState } from 'react';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
@@ -40,7 +40,7 @@ export const Profile: FC = () => {
     });
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValue((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value
