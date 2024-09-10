@@ -8,7 +8,8 @@ export const burgersApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: URL }),
   endpoints: (builder) => ({
     getIngredients: builder.query<TIngredient[], void>({
-      query: () => `/ingredients`
+      query: () => `/ingredients`,
+      transformResponse: (response: { data: TIngredient[] }) => response.data
     })
   })
 });

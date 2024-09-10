@@ -6,7 +6,10 @@ import styles from './constructor-page.module.css';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
-  const { isError, error, isLoading, isFetching } = useGetIngredientsQuery();
+  const { data, isError, error, isLoading, isFetching } =
+    useGetIngredientsQuery();
+
+  console.log(data);
 
   return (
     <>

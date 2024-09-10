@@ -15,13 +15,19 @@
 }
 
 .link {
-  display: flex;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   text-decoration: none;
   color: var(--text-inactive-color);
 }
 
 .link_active {
   color: var(--text-primary-color);
+}
+
+.link_active > svg {
+  fill: #fff;
 }
 
 .link_position_last {
