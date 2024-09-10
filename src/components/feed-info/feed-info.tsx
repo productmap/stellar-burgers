@@ -1,7 +1,7 @@
 import { FC } from 'react';
-
 import { TOrder } from '@utils-types';
 import { FeedInfoUI } from '@ui';
+import { useGetFeedQuery } from '../../services/burgersApi';
 
 const getOrders = (orders: TOrder[], status: string): number[] =>
   orders
@@ -11,11 +11,11 @@ const getOrders = (orders: TOrder[], status: string): number[] =>
 
 export const FeedInfo: FC = () => {
   /** TODO: взять переменные из стора */
+
   const orders: TOrder[] = [];
   const feed = {};
 
   const readyOrders = getOrders(orders, 'done');
-
   const pendingOrders = getOrders(orders, 'pending');
 
   return (
