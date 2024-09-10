@@ -6,9 +6,7 @@ export function AppWrapper() {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <main className={styles.main}>
-        <Outlet />
-      </main>
+      <Outlet />
     </div>
   );
 }

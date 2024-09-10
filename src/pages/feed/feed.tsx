@@ -1,16 +1,26 @@
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { FC } from 'react';
-import { useGetFeedQuery } from '../../services/burgersApi';
+import { useGetFeedsQuery } from '../../services/burgersApi';
 
 export const Feed: FC = () => {
-  /** TODO: взять переменную из стора */
-  const { data, isError, error, isLoading, isFetching } = useGetFeedQuery();
-  const { orders } = data || {};
+  const {
+    data: feeds = { orders: [] },
+    isError,
+    error,
+    isLoading,
+    isFetching,
+    refetch
+  } = useGetFeedsQuery();
+  // const { orders } = data || {};
 
-  if (!orders || !orders.length) {
+  if (isError) {
+    return <>{error}</>;
+  }
+
+  if (isLoading || isFetching) {
     return <Preloader />;
   }
 
-  return <FeedUI orders={orders} handleGetFeeds={() => {}} />;
+  return <FeedUI orders={feeds.orders} handleGetFeeds={() => refetch()} />;
 };
