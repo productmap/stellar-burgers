@@ -27,9 +27,36 @@ const burgerSlice = createSlice({
         state.constructorItems.ingredients.filter(
           (i) => i.id !== action.payload
         );
+    },
+    moveUpIngredient(state, action) {
+      const index = state.constructorItems.ingredients.findIndex(
+        (i) => i.id === action.payload
+      );
+      if (index > 0) {
+        const ingredient = state.constructorItems.ingredients[index];
+        state.constructorItems.ingredients[index] =
+          state.constructorItems.ingredients[index - 1];
+        state.constructorItems.ingredients[index - 1] = ingredient;
+      }
+    },
+    moveDownIngredient(state, action) {
+      const index = state.constructorItems.ingredients.findIndex(
+        (i) => i.id === action.payload
+      );
+      if (index < state.constructorItems.ingredients.length - 1) {
+        const ingredient = state.constructorItems.ingredients[index];
+        state.constructorItems.ingredients[index] =
+          state.constructorItems.ingredients[index + 1];
+        state.constructorItems.ingredients[index + 1] = ingredient;
+      }
     }
   }
 });
 
-export const { addIngredient, removeIngredient } = burgerSlice.actions;
+export const {
+  addIngredient,
+  removeIngredient,
+  moveUpIngredient,
+  moveDownIngredient
+} = burgerSlice.actions;
 export default burgerSlice.reducer;

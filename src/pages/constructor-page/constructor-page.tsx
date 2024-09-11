@@ -9,8 +9,6 @@ export const ConstructorPage: FC = () => {
   const { data, isError, error, isLoading, isFetching } =
     useGetIngredientsQuery();
 
-  console.log(data);
-
   return (
     <>
       {isError ? (
