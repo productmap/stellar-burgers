@@ -5,9 +5,7 @@ import { useGetIngredientsQuery } from '../../services/burgersApi';
 import styles from './constructor-page.module.css';
 
 export const ConstructorPage: FC = () => {
-  /** TODO: взять переменную из стора */
-  const { data, isError, error, isLoading, isFetching } =
-    useGetIngredientsQuery();
+  const { isError, error, isLoading, isFetching } = useGetIngredientsQuery();
 
   return (
     <>
