@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { AppWrapper } from '../app-wrapper';
 import { ConstructorPage, Feed, Profile } from '@pages';
-import { IngredientDetails, Modal } from '@components';
+import { IngredientDetails, Modal, OrderInfo } from '@components';
 
 const App = () => {
   const location = useLocation();
@@ -14,8 +14,9 @@ const App = () => {
         <Route path='/' element={<AppWrapper />}>
           <Route path='' element={<ConstructorPage />} />
           <Route path='/ingredients/:id' element={<IngredientDetails />} />
-          <Route path='feed' element={<Feed />} />
-          <Route path='profile' element={<Profile />} />
+          <Route path='/feed' element={<Feed />} />
+          <Route path='/feed/:id' element={<OrderInfo />} />
+          <Route path='/profile' element={<Profile />} />
         </Route>
       </Routes>
       {background && (
@@ -25,6 +26,14 @@ const App = () => {
             element={
               <Modal title={'Детали ингредиента'} onClose={() => navigate(-1)}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/feed/:id'
+            element={
+              <Modal title={''} onClose={() => navigate(-1)}>
+                <OrderInfo />
               </Modal>
             }
           />

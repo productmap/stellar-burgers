@@ -7,15 +7,13 @@ export const Feed: FC = () => {
   const {
     data: feeds = { orders: [] },
     isError,
-    error,
     isLoading,
     isFetching,
     refetch
   } = useGetFeedsQuery();
-  // const { orders } = data || {};
 
   if (isError) {
-    return <>{error}</>;
+    return <p>'Произошла ошибка'</p>;
   }
 
   if (isLoading || isFetching) {

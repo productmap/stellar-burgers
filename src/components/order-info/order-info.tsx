@@ -1,21 +1,29 @@
 import { FC, useMemo } from 'react';
-import { Preloader } from '@ui';
-import { OrderInfoUI } from '@ui';
-import { TIngredient } from '@utils-types';
+import { OrderInfoUI, Preloader } from '@ui';
+import { TFeedsResponse, TIngredient } from '@utils-types';
+import {
+  useGetFeedsQuery,
+  useGetIngredientsQuery
+} from '../../services/burgersApi';
+import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const { id } = useParams<{ id: string }>();
+  const { data: feed = [], isLoading: feedLoading } = useGetFeedsQuery();
+  const { data: ingredients = [], isLoading: ingredientsLoading } =
+    useGetIngredientsQuery();
 
-  const ingredients: TIngredient[] = [];
+  if (feedLoading || ingredientsLoading) {
+    return <Preloader />;
+  }
+
+  const orderData = (feed as TFeedsResponse).orders.find(
+    (order) => order.number === Number(id)
+  );
+
+  if (!orderData) {
+    return <p>Заказ не найден</p>;
+  }
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
@@ -57,10 +65,10 @@ export const OrderInfo: FC = () => {
       date,
       total
     };
-  }, [orderData, ingredients]);
+  }, [orderData]);
 
   if (!orderInfo) {
-    return <Preloader />;
+    return <p>Заказ не найден</p>;
   }
 
   return <OrderInfoUI orderInfo={orderInfo} />;
