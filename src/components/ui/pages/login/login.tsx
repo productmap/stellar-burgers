@@ -1,7 +1,7 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import {
-  Input,
   Button,
+  EmailInput,
   PasswordInput
 } from '@zlden/react-developer-burger-ui-components';
 import styles from '../common.module.css';
@@ -14,7 +14,8 @@ export const LoginUI: FC<LoginUIProps> = ({
   errorText,
   handleSubmit,
   password,
-  setPassword
+  setPassword,
+  isLoading
 }) => (
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
@@ -26,17 +27,13 @@ export const LoginUI: FC<LoginUIProps> = ({
       >
         <>
           <div className='pb-6'>
-            <Input
+            <EmailInput
               name='email'
-              type='email'
               placeholder='E-mail'
               value={email}
-              error={false}
               errorText=''
               size='default'
               onChange={(e) => setEmail(e.target.value)}
-              onPointerEnterCapture={() => {}}
-              onPointerLeaveCapture={() => {}}
             />
           </div>
           <div className='pb-6'>
@@ -48,7 +45,7 @@ export const LoginUI: FC<LoginUIProps> = ({
           </div>
           <div className={`pb-6 ${styles.button}`}>
             <Button type='primary' size='medium' htmlType='submit'>
-              Войти
+              {isLoading ? 'Ожидайте' : 'Войти'}
             </Button>
           </div>
           {errorText && (
