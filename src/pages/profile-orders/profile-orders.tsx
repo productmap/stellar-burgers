@@ -1,6 +1,6 @@
 import { ProfileOrdersUI } from '@ui-pages';
 import { FC } from 'react';
-import { useGetOrdersQuery } from '../../services/burgersApi';
+import { useGetOrdersQuery } from '../../services/api/burgersApi';
 import { Preloader } from '@ui';
 
 export const ProfileOrders: FC = () => {

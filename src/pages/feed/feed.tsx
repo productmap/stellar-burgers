@@ -1,7 +1,7 @@
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { FC } from 'react';
-import { useGetFeedsQuery } from '../../services/burgersApi';
+import { useGetFeedsQuery } from '../../services/api/burgersApi';
 
 export const Feed: FC = () => {
   const {

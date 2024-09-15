@@ -1,7 +1,7 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useDispatch } from 'react-redux';
-import { useLoginMutation } from '../../services/burgersApi';
+import { useLoginMutation } from '../../services/api/burgersApi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setUser } from '@slices';
 import { CustomError } from '@store-types';

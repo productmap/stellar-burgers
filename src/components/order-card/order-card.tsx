@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { OrderCardProps } from './type';
 import { TIngredient } from '@utils-types';
 import { OrderCardUI } from '@ui';
-import { useGetIngredientsQuery } from '../../services/burgersApi';
+import { useGetIngredientsQuery } from '../../services/api/burgersApi';
 
 const maxIngredients = 6;
 

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { BurgerConstructor, BurgerIngredients } from '@components';
 import { Preloader } from '@ui';
-import { useGetIngredientsQuery } from '../../services/burgersApi';
+import { useGetIngredientsQuery } from '../../services/api/burgersApi';
 import styles from './constructor-page.module.css';
 
 export const ConstructorPage: FC = () => {

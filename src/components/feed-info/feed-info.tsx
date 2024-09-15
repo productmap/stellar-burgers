@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { TOrder } from '@utils-types';
 import { FeedInfoUI } from '@ui';
-import { useGetFeedsQuery } from '../../services/burgersApi';
+import { useGetFeedsQuery } from '../../services/api/burgersApi';
 
 const getOrders = (orders: TOrder[], status: string): number[] =>
   orders

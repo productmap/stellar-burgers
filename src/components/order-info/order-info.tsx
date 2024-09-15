@@ -4,7 +4,7 @@ import { TIngredient } from '@utils-types';
 import {
   useGetFeedsQuery,
   useGetIngredientsQuery
-} from '../../services/burgersApi';
+} from '../../services/api/burgersApi';
 import { useParams } from 'react-router-dom';
 import { TFeedsResponse } from '../../services/utils/types';
 

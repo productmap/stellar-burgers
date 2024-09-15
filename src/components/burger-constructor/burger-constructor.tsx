@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useAppDispatch, useAppSelector } from '../../services/store';
-import { useOrderBurgerMutation } from '../../services/burgersApi';
+import { useOrderBurgerMutation } from '../../services/api/burgersApi';
 import {
   resetOrder,
   setOrderModalData,

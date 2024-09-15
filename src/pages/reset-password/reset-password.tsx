@@ -2,7 +2,7 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ResetPasswordUI } from '@ui-pages';
-import { useResetPasswordMutation } from '../../services/burgersApi';
+import { useResetPasswordMutation } from '../../services/api/burgersApi';
 import { setUser } from '../../services/slices/userSlice';
 import { useDispatch } from 'react-redux';
 import { CustomError } from '@store-types';

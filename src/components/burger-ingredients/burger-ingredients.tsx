@@ -3,7 +3,7 @@ import { useInView } from 'react-intersection-observer';
 
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '@ui';
-import { useGetIngredientsQuery } from '../../services/burgersApi';
+import { useGetIngredientsQuery } from '../../services/api/burgersApi';
 
 export const BurgerIngredients: FC = () => {
   const { data: ingredients = [] } = useGetIngredientsQuery();

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { IngredientDetailsUI, Preloader } from '@ui';
-import { useGetIngredientsQuery } from '../../services/burgersApi';
+import { useGetIngredientsQuery } from '../../services/api/burgersApi';
 import { useParams } from 'react-router-dom';
 import { TIngredient } from '@utils-types';
 
