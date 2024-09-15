@@ -12,12 +12,23 @@ import {
   ResetPassword
 } from '@pages';
 import { IngredientDetails, Modal, OrderInfo } from '@components';
-import { PrivateRoute } from '../protected-route/private-route';
+import { OnlyUnAuth, PrivateRoute } from '../protected-route/private-route';
+import { useAppDispatch } from '../../services/store';
+import { useCheckAuth } from '../../hooks/useCheckAuth';
 
 const App = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const background = location.state && location.state.background;
-  const navigate = useNavigate();
+  // const { data: user, error } = useGetUserQuery();
+  //
+  // useEffect(() => {
+  //   if (user && !error) {
+  //     dispatch(setUser(user));
+  //   }
+  // }, [user, error, dispatch]);
+  useCheckAuth();
 
   return (
     <>
@@ -27,21 +38,18 @@ const App = () => {
           <Route path='ingredients/:id' element={<IngredientDetails />} />
           <Route path='feed' element={<Feed />} />
           <Route path='feed/:id' element={<OrderInfo />} />
-          <Route
-            path='login'
-            element={<PrivateRoute children={<Login />} onlyUnAuth />}
-          />
+          <Route path='login' element={<OnlyUnAuth children={<Login />} />} />
           <Route
             path='register'
-            element={<PrivateRoute children={<Register />} onlyUnAuth />}
+            element={<OnlyUnAuth children={<Register />} />}
           />
           <Route
             path='forgot-password'
-            element={<PrivateRoute children={<ForgotPassword />} onlyUnAuth />}
+            element={<OnlyUnAuth children={<ForgotPassword />} />}
           />
           <Route
             path='reset-password'
-            element={<PrivateRoute children={<ResetPassword />} onlyUnAuth />}
+            element={<OnlyUnAuth children={<ResetPassword />} />}
           />
           <Route
             path='profile'
