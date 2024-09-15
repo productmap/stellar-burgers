@@ -1,10 +1,5 @@
-import {
-  BaseQueryFn,
-  createApi,
-  FetchArgs,
-  fetchBaseQuery,
-  FetchBaseQueryError
-} from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { baseQueryWithReAuth } from '../utils/reAuth';
 import Cookies from 'js-cookie';
 import {
   TAuthResponse,
@@ -12,58 +7,10 @@ import {
   TIngredientsResponse,
   TLoginData,
   TLoginResponse,
-  TRefreshResponse,
   TRegisterData,
-  TServerResponse
+  TServerResponse,
+  TUserResponse
 } from '@store-types';
-
-const URL = process.env.BURGER_API_URL;
-
-const baseQuery = fetchBaseQuery({
-  baseUrl: URL,
-  prepareHeaders: (headers) => {
-    const token = Cookies.get('accessToken');
-    if (token) {
-      headers.set('authorization', token);
-    }
-    return headers;
-  }
-});
-
-const baseQueryWithReAuth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-  const response = await baseQuery(args, api, extraOptions);
-  console.log(response);
-  if (response.error?.status === 401 || response.error?.status === 403) {
-    if (localStorage.getItem('refreshToken')) {
-      const refreshResponse = await baseQuery(
-        {
-          url: '/auth/token',
-          method: 'POST',
-          body: { token: localStorage.getItem('refreshToken') }
-        },
-        api,
-        extraOptions
-      );
-
-      const tokens = refreshResponse as {
-        data: { accessToken: string; refreshToken: string };
-      };
-
-      if (refreshResponse) {
-        Cookies.set('accessToken', tokens.data.accessToken);
-        localStorage.setItem('refreshToken', tokens.data.refreshToken);
-      } else {
-        localStorage.clear();
-        Cookies.remove('accessToken');
-      }
-    }
-  }
-  return response;
-};
 
 export const burgersApi = createApi({
   reducerPath: 'burgersApi',
@@ -85,20 +32,6 @@ export const burgersApi = createApi({
     getOrders: builder.query<TFeedsResponse, void>({
       query: () => '/orders'
     }),
-    refreshToken: builder.mutation<TRefreshResponse, void>({
-      query: () => ({
-        url: '/auth/token',
-        method: 'POST',
-        body: JSON.stringify({
-          token: localStorage.getItem('refreshToken')
-        })
-      }),
-      transformResponse: (response: TRefreshResponse) => {
-        localStorage.setItem('refreshToken', response.refreshToken);
-        Cookies.set('accessToken', response.accessToken);
-        return response;
-      }
-    }),
     registration: builder.mutation<TAuthResponse, TRegisterData>({
       query: (payload) => ({
         url: `/auth/register`,
@@ -106,7 +39,10 @@ export const burgersApi = createApi({
         body: payload
       }),
       transformResponse: (response: TAuthResponse) => {
-        Cookies.set('accessToken', response.accessToken);
+        Cookies.set('accessToken', response.accessToken, {
+          secure: true,
+          sameSite: 'Strict'
+        });
         localStorage.setItem('refreshToken', response.refreshToken);
         return response;
       }
@@ -118,7 +54,10 @@ export const burgersApi = createApi({
         body: payload
       }),
       transformResponse: (response: TLoginResponse) => {
-        Cookies.set('accessToken', response.accessToken);
+        Cookies.set('accessToken', response.accessToken, {
+          secure: true,
+          sameSite: 'Strict'
+        });
         localStorage.setItem('refreshToken', response.refreshToken);
         return response;
       }
@@ -145,6 +84,9 @@ export const burgersApi = createApi({
         body: data
       })
     }),
+    getUser: builder.query<TUserResponse, void>({
+      query: () => '/auth/user'
+    }),
     orderBurger: builder.mutation({
       query: (payload) => ({
         url: `/orders`,
@@ -162,10 +104,10 @@ export const {
   useGetIngredientsQuery,
   useGetFeedsQuery,
   useGetOrdersQuery,
-  useRefreshTokenMutation,
   useRegistrationMutation,
   useLoginMutation,
   useLogoutMutation,
   useResetPasswordMutation,
+  useGetUserQuery,
   useOrderBurgerMutation
 } = burgersApi;

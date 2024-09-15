@@ -1,14 +1,14 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { burgersApi } from './burgersApi';
-import burgerSlice from './slices/burgerSlice';
-import userReducer from './slices/userSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { burgersApi } from './api/burgersApi';
+import userReducer from './slices/userSlice';
+import burgerSlice from './slices/burgerSlice';
 import orderSlice from './slices/orderSlice';
 
 const rootReducer = combineReducers({
   [burgersApi.reducerPath]: burgersApi.reducer,
-  burger: burgerSlice,
   user: userReducer,
+  burger: burgerSlice,
   order: orderSlice
 });
 
