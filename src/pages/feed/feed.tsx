@@ -8,7 +8,6 @@ export const Feed: FC = () => {
     data: feeds = { orders: [] },
     isError,
     isLoading,
-    isFetching,
     refetch
   } = useGetFeedsQuery();
 
@@ -16,9 +15,14 @@ export const Feed: FC = () => {
     return <p>'Произошла ошибка'</p>;
   }
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <Preloader />;
   }
+
+  const handleGetFeeds = () => {
+    console.log('handleGetFeeds');
+    refetch();
+  };
 
   return <FeedUI orders={feeds.orders} handleGetFeeds={() => refetch()} />;
 };

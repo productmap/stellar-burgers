@@ -1,11 +1,12 @@
 import { FC, useMemo } from 'react';
 import { OrderInfoUI, Preloader } from '@ui';
-import { TFeedsResponse, TIngredient } from '@utils-types';
+import { TIngredient } from '@utils-types';
 import {
   useGetFeedsQuery,
   useGetIngredientsQuery
 } from '../../services/burgersApi';
 import { useParams } from 'react-router-dom';
+import { TFeedsResponse } from '../../services/utils/types';
 
 export const OrderInfo: FC = () => {
   const { id } = useParams<{ id: string }>();

@@ -1,12 +1,9 @@
-import { ProfileUI } from '@ui-pages';
 import { ChangeEvent, FC, SyntheticEvent, useEffect, useState } from 'react';
+import { useAppSelector } from '../../services/store';
+import { ProfileUI } from '@ui-pages';
 
 export const Profile: FC = () => {
-  /** TODO: взять переменную из стора */
-  const user = {
-    name: '',
-    email: ''
-  };
+  const { currentUser: user } = useAppSelector((store) => store.user);
 
   const [formValue, setFormValue] = useState({
     name: user.name,
@@ -56,6 +53,4 @@ export const Profile: FC = () => {
       handleInputChange={handleInputChange}
     />
   );
-
-  return null;
 };

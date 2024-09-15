@@ -5,16 +5,16 @@ import { useGetIngredientsQuery } from '../../services/burgersApi';
 import styles from './constructor-page.module.css';
 
 export const ConstructorPage: FC = () => {
-  const { isError, error, isLoading, isFetching } = useGetIngredientsQuery();
+  const { isError, error, isLoading } = useGetIngredientsQuery();
 
   return (
     <>
       {isError ? (
         <p>
           Произошла ошибка:
-          {error instanceof Error ? error.message : 'Unknown error'}
+          {error instanceof Error ? error.message : 'Неизвестная ошибка'}
         </p>
-      ) : isLoading || isFetching ? (
+      ) : isLoading ? (
         <Preloader />
       ) : (
         <main className={styles.containerMain}>
