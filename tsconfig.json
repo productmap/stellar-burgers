@@ -18,14 +18,14 @@
     "types": ["node", "jest"],
     "baseUrl": ".",
     "paths": {
+      "@api": ["src/utils/burger-api.ts"],
+      "@slices": ["src/services/slices"],
       "@pages": ["src/pages"],
       "@components": ["src/components"],
       "@ui": ["src/components/ui"],
       "@ui-pages": ["src/components/ui/pages"],
-      "@utils-types": ["src/utils/types"],
-      "@api": ["src/utils/burger-api.ts"],
-      "@slices": ["src/services/slices"],
-      "@selectors": ["src/services/selectors"]
+      "@store-types": ["src/services/utils/types.ts"],
+      "@utils-types": ["src/utils/types"]
     }
   },
   "include": ["src"]
