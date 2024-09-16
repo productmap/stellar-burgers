@@ -51,6 +51,7 @@ const App = () => {
             path='profile/orders'
             element={<PrivateRoute children={<ProfileOrders />} />}
           />
+          {/*<Route path='profile/orders/:id' element={<OrderInfo />} />*/}
           <Route path='*' element={<NotFound404 />} />
         </Route>
       </Routes>
@@ -66,6 +67,14 @@ const App = () => {
           />
           <Route
             path='/feed/:id'
+            element={
+              <Modal title={''} onClose={() => navigate(-1)}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:id'
             element={
               <Modal title={''} onClose={() => navigate(-1)}>
                 <OrderInfo />

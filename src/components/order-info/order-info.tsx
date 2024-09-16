@@ -22,9 +22,9 @@ export const OrderInfo: FC = () => {
     (order) => order.number === Number(id)
   );
 
-  if (!orderData) {
-    return <p>Заказ не найден</p>;
-  }
+  // if (!orderData) {
+  //   return <p>Заказ не найден</p>;
+  // }
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
@@ -67,6 +67,10 @@ export const OrderInfo: FC = () => {
       total
     };
   }, [orderData]);
+
+  if (feedLoading || ingredientsLoading) {
+    return <Preloader />;
+  }
 
   if (!orderInfo) {
     return <p>Заказ не найден</p>;
