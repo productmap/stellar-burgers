@@ -5,7 +5,7 @@ import { useForgotPasswordMutation } from '../../services/api/burgersApi';
 
 export const ForgotPassword: FC = () => {
   const navigate = useNavigate();
-  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
+  const [forgotPassword] = useForgotPasswordMutation();
   const [email, setEmail] = useState('');
   const [error, setError] = useState<Error | null>(null);
 

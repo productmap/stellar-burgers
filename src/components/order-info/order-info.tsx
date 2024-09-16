@@ -14,15 +14,14 @@ export const OrderInfo: FC = () => {
   const { data: ingredients = [], isLoading: ingredientsLoading } =
     useGetIngredientsQuery();
 
-  if (feedLoading || ingredientsLoading) {
-    return <Preloader />;
-  }
+  const isLoading = feedLoading || ingredientsLoading;
+  const orderData = useMemo(() => {
+    if (isLoading) return null;
+    return (feed as TFeedsResponse).orders.find(
+      (order) => order.number === Number(id)
+    );
+  }, [feed, id, isLoading]);
 
-  const orderData = (feed as TFeedsResponse).orders.find(
-    (order) => order.number === Number(id)
-  );
-
-  /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
 
@@ -62,9 +61,9 @@ export const OrderInfo: FC = () => {
       date,
       total
     };
-  }, [orderData]);
+  }, [orderData, ingredients]);
 
-  if (feedLoading || ingredientsLoading) {
+  if (isLoading) {
     return <Preloader />;
   }
 

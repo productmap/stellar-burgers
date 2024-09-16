@@ -6,7 +6,7 @@ import { setUser } from '@slices';
 
 export const Profile: FC = () => {
   const { currentUser: user } = useAppSelector((store) => store.user);
-  const [editUser, { data, isLoading }] = useEditUserMutation();
+  const [editUser] = useEditUserMutation();
   const dispatch = useAppDispatch();
   const [error, setError] = useState('');
 
