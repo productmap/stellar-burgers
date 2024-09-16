@@ -51,7 +51,10 @@ const App = () => {
             path='profile/orders'
             element={<PrivateRoute children={<ProfileOrders />} />}
           />
-          {/*<Route path='profile/orders/:id' element={<OrderInfo />} />*/}
+          <Route
+            path='profile/orders/:id'
+            element={<PrivateRoute children={<OrderInfo />} />}
+          />
           <Route path='*' element={<NotFound404 />} />
         </Route>
       </Routes>

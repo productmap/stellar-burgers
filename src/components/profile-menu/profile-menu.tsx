@@ -12,8 +12,8 @@ export const ProfileMenu: FC = () => {
   const [logout] = useLogoutMutation();
 
   const handleLogout = () => {
-    logout();
     dispatch(clearUser());
+    logout();
     navigate('/', { replace: true });
   };
 

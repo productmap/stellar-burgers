@@ -11,6 +11,7 @@ import {
   TServerResponse,
   TUserResponse
 } from '@store-types';
+import { forgotPasswordApi } from '@api';
 
 export const burgersApi = createApi({
   reducerPath: 'burgersApi',
@@ -74,6 +75,13 @@ export const burgersApi = createApi({
         return response;
       }
     }),
+    forgotPassword: builder.mutation<TServerResponse<{}>, { email: string }>({
+      query: (data) => ({
+        url: 'password-reset',
+        method: 'POST',
+        body: data
+      })
+    }),
     resetPassword: builder.mutation<
       TServerResponse<{}>,
       { password: string; token: string }
@@ -114,6 +122,7 @@ export const {
   useRegistrationMutation,
   useLoginMutation,
   useLogoutMutation,
+  useForgotPasswordMutation,
   useResetPasswordMutation,
   useGetUserQuery,
   useEditUserMutation,

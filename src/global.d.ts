@@ -1,12 +1,10 @@
 import 'react';
-import { AriaAttributes } from 'react';
+import { AriaAttributes, DOMAttributes } from 'react';
 
 declare module 'react' {
   interface PointerEvent<T> {
-    // Add properties of PointerEvent here
     pointerId: number;
     pointerType: string;
-    // ...
   }
 
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {

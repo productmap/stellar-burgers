@@ -6,7 +6,7 @@ import {
   useGetIngredientsQuery
 } from '../../services/api/burgersApi';
 import { useParams } from 'react-router-dom';
-import { TFeedsResponse } from '../../services/utils/types';
+import { TFeedsResponse } from '@store-types';
 
 export const OrderInfo: FC = () => {
   const { id } = useParams<{ id: string }>();
