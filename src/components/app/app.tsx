@@ -13,21 +13,13 @@ import {
 } from '@pages';
 import { IngredientDetails, Modal, OrderInfo } from '@components';
 import { OnlyUnAuth, PrivateRoute } from '../protected-route/private-route';
-import { useAppDispatch } from '../../services/store';
 import { useCheckAuth } from '../../hooks/useCheckAuth';
 
 const App = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const location = useLocation();
   const background = location.state && location.state.background;
-  // const { data: user, error } = useGetUserQuery();
-  //
-  // useEffect(() => {
-  //   if (user && !error) {
-  //     dispatch(setUser(user));
-  //   }
-  // }, [user, error, dispatch]);
+
   useCheckAuth();
 
   return (

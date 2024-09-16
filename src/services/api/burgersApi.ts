@@ -87,6 +87,13 @@ export const burgersApi = createApi({
     getUser: builder.query<TUserResponse, void>({
       query: () => '/auth/user'
     }),
+    editUser: builder.mutation<TUserResponse, Partial<TRegisterData>>({
+      query: (payload) => ({
+        url: `/auth/user`,
+        method: 'PATCH',
+        body: payload
+      })
+    }),
     orderBurger: builder.mutation({
       query: (payload) => ({
         url: `/orders`,
@@ -109,5 +116,6 @@ export const {
   useLogoutMutation,
   useResetPasswordMutation,
   useGetUserQuery,
+  useEditUserMutation,
   useOrderBurgerMutation
 } = burgersApi;

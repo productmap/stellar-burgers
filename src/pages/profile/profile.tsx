@@ -1,9 +1,14 @@
 import { ChangeEvent, FC, SyntheticEvent, useEffect, useState } from 'react';
-import { useAppSelector } from '../../services/store';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 import { ProfileUI } from '@ui-pages';
+import { useEditUserMutation } from '../../services/api/burgersApi';
+import { setUser } from '@slices';
 
 export const Profile: FC = () => {
   const { currentUser: user } = useAppSelector((store) => store.user);
+  const [editUser, { data, isLoading }] = useEditUserMutation();
+  const dispatch = useAppDispatch();
+  const [error, setError] = useState('');
 
   const [formValue, setFormValue] = useState({
     name: user.name,
@@ -26,6 +31,13 @@ export const Profile: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+
+    try {
+      editUser(formValue);
+      dispatch(setUser({ user: formValue }));
+    } catch (err) {
+      setError('Не удалось изменить данные');
+    }
   };
 
   const handleCancel = (e: SyntheticEvent) => {
@@ -46,6 +58,7 @@ export const Profile: FC = () => {
 
   return (
     <ProfileUI
+      error={error}
       formValue={formValue}
       isFormChanged={isFormChanged}
       handleCancel={handleCancel}
