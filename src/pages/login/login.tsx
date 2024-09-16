@@ -1,13 +1,13 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
-import { useDispatch } from 'react-redux';
 import { useLoginMutation } from '../../services/api/burgersApi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setUser } from '@slices';
 import { CustomError } from '@store-types';
+import { useAppDispatch } from '../../services/store';
 
 export const Login: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: '/' } };
@@ -28,7 +28,7 @@ export const Login: FC = () => {
     try {
       const response = await login({ email, password }).unwrap();
       dispatch(setUser(response));
-      navigate(from, { replace: true });
+      navigate(from);
     } catch (err) {
       setError((err as CustomError).data.message || 'Что-то пошло не так');
     }

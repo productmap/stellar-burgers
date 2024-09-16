@@ -1,17 +1,17 @@
 import React, { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../services/store';
 import { useRegistrationMutation } from '../../services/api/burgersApi';
+import { setUser } from '@slices';
 import { CustomError } from '@store-types';
-import { setUser } from '../../services/slices/userSlice';
-import { useDispatch } from 'react-redux';
 
 interface MyComponentProps {
   onPointerEnterCapture?: (e: React.PointerEvent<HTMLDivElement>) => void;
 }
 
 export const Register: FC<MyComponentProps> = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: '/' } };

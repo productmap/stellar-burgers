@@ -22,10 +22,6 @@ export const OrderInfo: FC = () => {
     (order) => order.number === Number(id)
   );
 
-  // if (!orderData) {
-  //   return <p>Заказ не найден</p>;
-  // }
-
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;

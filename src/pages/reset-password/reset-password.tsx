@@ -1,15 +1,14 @@
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { ResetPasswordUI } from '@ui-pages';
+import { useAppDispatch } from '../../services/store';
 import { useResetPasswordMutation } from '../../services/api/burgersApi';
 import { setUser } from '@slices';
-import { useDispatch } from 'react-redux';
 import { CustomError } from '@store-types';
 
 export const ResetPassword: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');

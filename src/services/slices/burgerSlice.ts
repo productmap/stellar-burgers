@@ -1,5 +1,5 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
-import { TBurgerSliceState, TIngredient } from '@utils-types';
+import { createSlice } from '@reduxjs/toolkit';
+import { TBurgerSliceState, TConstructorIngredient } from '@utils-types';
 
 const initialState: TBurgerSliceState = {
   constructorItems: {
@@ -12,13 +12,12 @@ const burgerSlice = createSlice({
   name: 'burger',
   initialState: initialState,
   reducers: {
-    addIngredient(state, action: { payload: TIngredient }) {
+    addIngredient(state, action: { payload: TConstructorIngredient }) {
       if (action.payload) {
-        const ingredient = { id: nanoid(), ...action.payload };
         if (action.payload.type === 'bun') {
-          state.constructorItems.bun = ingredient;
+          state.constructorItems.bun = action.payload;
         } else {
-          state.constructorItems.ingredients.push(ingredient);
+          state.constructorItems.ingredients.push(action.payload);
         }
       }
     },

@@ -4,22 +4,31 @@ import { BurgerConstructorUI } from '@ui';
 import { useAppDispatch, useAppSelector } from '../../services/store';
 import { useOrderBurgerMutation } from '../../services/api/burgersApi';
 import {
+  clearConstructor,
   resetOrder,
   setOrderModalData,
   setOrderRequest
-} from '../../services/slices/orderSlice';
-import { clearConstructor } from '../../services/slices/burgerSlice';
+} from '@slices';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const { constructorItems } = useAppSelector((store) => store.burger);
   const { orderRequest, orderModalData } = useAppSelector(
     (store) => store.order
   );
+  const user = useAppSelector((store) => store.user);
   const [orderBurger] = useOrderBurgerMutation();
 
   const onOrderClick = async () => {
     if (!constructorItems.bun || orderRequest) return;
+
+    if (!user.isAuthenticated) {
+      navigate('/login', { state: { from: location } });
+      return;
+    }
 
     const ingredientsList = [
       constructorItems.bun._id,

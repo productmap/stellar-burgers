@@ -11,7 +11,6 @@ import {
   TServerResponse,
   TUserResponse
 } from '@store-types';
-import { forgotPasswordApi } from '@api';
 
 export const burgersApi = createApi({
   reducerPath: 'burgersApi',
