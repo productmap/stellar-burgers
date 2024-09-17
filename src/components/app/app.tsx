@@ -13,14 +13,32 @@ import {
 } from '@pages';
 import { IngredientDetails, Modal, OrderInfo } from '@components';
 import { OnlyUnAuth, PrivateRoute } from '../protected-route/private-route';
-import { useCheckAuth } from '../../hooks/useCheckAuth';
+import { useGetUserQuery } from '../../services/api/burgersApi';
+import { useAppDispatch, useAppSelector } from '../../services/store';
+import { useEffect } from 'react';
+import Cookies from 'js-cookie';
+import { setUser } from '@slices';
 
 const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
   const background = location.state && location.state.background;
+  const { data: user } = useGetUserQuery();
+  const { currentUser } = useAppSelector((store) => store.user);
 
-  // useCheckAuth();
+  useEffect(() => {
+    const accessToken = Cookies.get('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    // Если нет токенов, то пользователь не авторизован
+    if (!accessToken || !refreshToken) return;
+
+    // Если пользователь авторизован, то получаем данные юзера
+    if (user && !currentUser.name) {
+      dispatch(setUser(user));
+    }
+  }, [user, currentUser]);
 
   return (
     <>
