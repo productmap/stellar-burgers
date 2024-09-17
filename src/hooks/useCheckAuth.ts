@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useAppDispatch } from '../services/store';
 import { useGetUserQuery } from '../services/api/burgersApi';
 import { clearUser, setUser } from '@slices';
@@ -10,21 +10,33 @@ export const useCheckAuth = () => {
   const navigate = useNavigate();
   const { data: user, error } = useGetUserQuery();
 
+  const handleDispatch = useCallback(
+    (action: any) => {
+      dispatch(action);
+    },
+    [dispatch]
+  );
+
+  const handleNavigate = useCallback(
+    (url: string) => {
+      navigate(url);
+    },
+    [navigate]
+  );
+
   useEffect(() => {
     const accessToken = Cookies.get('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
 
-    // Если нет токенов, то пользователь не авторизован
     if (!accessToken || !refreshToken) {
-      dispatch(clearUser());
+      handleDispatch(clearUser());
       return;
     }
 
-    // Если пользователь авторизован, то получаем данные юзера
-    if (user && !error) {
-      dispatch(setUser(user));
+    if (user) {
+      handleDispatch(setUser(user));
     } else if (error) {
-      navigate('/login');
+      handleNavigate('/login');
     }
-  }, [user, error, dispatch, navigate]);
+  }, [user, error, handleDispatch, handleNavigate]);
 };

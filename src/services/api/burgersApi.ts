@@ -70,7 +70,7 @@ export const burgersApi = createApi({
       }),
       transformResponse: (response: TServerResponse<{}>) => {
         Cookies.remove('accessToken');
-        localStorage.removeItem('refreshToken');
+        localStorage.clear();
         return response;
       }
     }),

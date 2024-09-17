@@ -3,7 +3,6 @@ import { LoginUI } from '@ui-pages';
 import { useLoginMutation } from '../../services/api/burgersApi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setUser } from '@slices';
-import { CustomError } from '@store-types';
 import { useAppDispatch } from '../../services/store';
 
 export const Login: FC = () => {
@@ -28,9 +27,9 @@ export const Login: FC = () => {
     try {
       const response = await login({ email, password }).unwrap();
       dispatch(setUser(response));
-      navigate(from);
+      navigate(from.pathname, { replace: true });
     } catch (err) {
-      setError((err as CustomError).data.message || 'Что-то пошло не так');
+      setError('Что-то пошло не так');
     }
   };
 

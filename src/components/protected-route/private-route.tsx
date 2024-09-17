@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../services/store';
+import { shallowEqual } from 'react-redux';
 
 type TPrivateRoute = {
   onlyUnAuth?: boolean;
@@ -13,7 +14,7 @@ type TOnlyUnAuth = {
 
 export function PrivateRoute({ onlyUnAuth = false, children }: TPrivateRoute) {
   const location = useLocation();
-  const user = useAppSelector((store) => store.user);
+  const user = useAppSelector((store) => store.user, shallowEqual);
   const { from } = location.state || { from: { pathname: '/' } };
 
   // Если авторизованный пытается перейти на путь только для неавторизованных
