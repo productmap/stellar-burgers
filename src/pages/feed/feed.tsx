@@ -1,15 +1,28 @@
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
-import { TOrder } from '@utils-types';
 import { FC } from 'react';
+import { useGetFeedsQuery } from '../../services/api/burgersApi';
 
 export const Feed: FC = () => {
-  /** TODO: взять переменную из стора */
-  const orders: TOrder[] = [];
+  const {
+    data: feeds = { orders: [] },
+    isError,
+    isLoading,
+    refetch
+  } = useGetFeedsQuery();
 
-  if (!orders.length) {
+  if (isError) {
+    return <p>'Произошла ошибка'</p>;
+  }
+
+  if (isLoading) {
     return <Preloader />;
   }
 
-  <FeedUI orders={orders} handleGetFeeds={() => {}} />;
+  const handleGetFeeds = () => {
+    console.log('handleGetFeeds');
+    refetch();
+  };
+
+  return <FeedUI orders={feeds.orders} handleGetFeeds={() => refetch()} />;
 };

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import {
-  Input,
   Button,
+  Input,
   PasswordInput
 } from '@zlden/react-developer-burger-ui-components';
 import styles from '../common.module.css';
@@ -14,7 +14,8 @@ export const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
   setPassword,
   handleSubmit,
   token,
-  setToken
+  setToken,
+  isLoading
 }) => (
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
@@ -33,19 +34,19 @@ export const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
         </div>
         <div className='pb-6'>
           <Input
+            name='token'
             type='text'
             placeholder='Введите код из письма'
-            onChange={(e) => setToken(e.target.value)}
             value={token}
-            name='token'
             error={false}
             errorText=''
             size='default'
+            onChange={(e) => setToken(e.target.value)}
           />
         </div>
         <div className={`pb-6 ${styles.button}`}>
           <Button type='primary' size='medium' htmlType='submit'>
-            Сохранить
+            {isLoading ? 'Ожидайте' : 'Сохранить'}
           </Button>
         </div>
         {errorText && (

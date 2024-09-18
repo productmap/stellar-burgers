@@ -1,7 +1,7 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import {
-  Input,
   Button,
+  Input,
   PasswordInput
 } from '@zlden/react-developer-burger-ui-components';
 import styles from '../common.module.css';
@@ -16,7 +16,8 @@ export const RegisterUI: FC<RegisterUIProps> = ({
   password,
   setPassword,
   userName,
-  setUserName
+  setUserName,
+  isLoading
 }) => (
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
@@ -29,26 +30,30 @@ export const RegisterUI: FC<RegisterUIProps> = ({
         <>
           <div className='pb-6'>
             <Input
+              name='name'
               type='text'
               placeholder='Имя'
-              onChange={(e) => setUserName(e.target.value)}
               value={userName}
-              name='name'
               error={false}
               errorText=''
               size='default'
+              onChange={(e) => setUserName(e.target.value)}
+              onPointerEnterCapture={() => {}}
+              onPointerLeaveCapture={() => {}}
             />
           </div>
           <div className='pb-6'>
             <Input
+              name={'email'}
               type='email'
               placeholder='E-mail'
-              onChange={(e) => setEmail(e.target.value)}
               value={email}
-              name={'email'}
               error={false}
               errorText=''
               size={'default'}
+              onChange={(e) => setEmail(e.target.value)}
+              onPointerEnterCapture={() => {}}
+              onPointerLeaveCapture={() => {}}
             />
           </div>
           <div className='pb-6'>
@@ -60,7 +65,7 @@ export const RegisterUI: FC<RegisterUIProps> = ({
           </div>
           <div className={`pb-6 ${styles.button}`}>
             <Button type='primary' size='medium' htmlType='submit'>
-              Зарегистрироваться
+              {isLoading ? 'Загрузка...' : 'Зарегистрироваться'}
             </Button>
           </div>
           {errorText && (

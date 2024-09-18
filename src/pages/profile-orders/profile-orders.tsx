@@ -1,10 +1,22 @@
 import { ProfileOrdersUI } from '@ui-pages';
-import { TOrder } from '@utils-types';
 import { FC } from 'react';
+import { useGetOrdersQuery } from '../../services/api/burgersApi';
+import { Preloader } from '@ui';
 
 export const ProfileOrders: FC = () => {
-  /** TODO: взять переменную из стора */
-  const orders: TOrder[] = [];
+  const {
+    data: feed = { orders: [] },
+    isError,
+    isLoading
+  } = useGetOrdersQuery();
 
-  return <ProfileOrdersUI orders={orders} />;
+  if (isError) {
+    return <p>'Произошла ошибка'</p>;
+  }
+
+  if (isLoading) {
+    return <Preloader />;
+  }
+
+  return <ProfileOrdersUI orders={feed.orders} />;
 };

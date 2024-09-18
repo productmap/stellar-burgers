@@ -1,19 +1,20 @@
-import { useSelector } from '../../services/store';
-
+import { FC } from 'react';
+import { BurgerConstructor, BurgerIngredients } from '@components';
+import { Preloader } from '@ui';
+import { useGetIngredientsQuery } from '../../services/api/burgersApi';
 import styles from './constructor-page.module.css';
 
-import { BurgerIngredients } from '../../components';
-import { BurgerConstructor } from '../../components';
-import { Preloader } from '../../components/ui';
-import { FC } from 'react';
-
 export const ConstructorPage: FC = () => {
-  /** TODO: взять переменную из стора */
-  const isIngredientsLoading = false;
+  const { isError, error, isLoading } = useGetIngredientsQuery();
 
   return (
     <>
-      {isIngredientsLoading ? (
+      {isError ? (
+        <p>
+          Произошла ошибка:
+          {error instanceof Error ? error.message : 'Неизвестная ошибка'}
+        </p>
+      ) : isLoading ? (
         <Preloader />
       ) : (
         <main className={styles.containerMain}>

@@ -8,6 +8,7 @@ import { ProfileUIProps } from './type';
 import { ProfileMenu } from '@components';
 
 export const ProfileUI: FC<ProfileUIProps> = ({
+  error,
   formValue,
   isFormChanged,
   updateUserError,
@@ -39,30 +40,37 @@ export const ProfileUI: FC<ProfileUIProps> = ({
         </div>
         <div className='pb-6'>
           <Input
+            name={'email'}
             type={'email'}
             placeholder={'E-mail'}
-            onChange={handleInputChange}
             value={formValue.email}
-            name={'email'}
             error={false}
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            onChange={handleInputChange}
           />
         </div>
         <div className='pb-6'>
           <Input
+            name={'password'}
             type={'password'}
             placeholder={'Пароль'}
-            onChange={handleInputChange}
             value={formValue.password}
-            name={'password'}
             error={false}
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            onChange={handleInputChange}
           />
         </div>
+        {error && (
+          <p
+            className={`${commonStyles.error} pt-5 text text_type_main-default`}
+          >
+            {error}
+          </p>
+        )}
         {isFormChanged && (
           <div className={styles.button}>
             <Button
