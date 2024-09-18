@@ -28,8 +28,12 @@ const userSlice = createSlice({
       state.currentUser = initialState.currentUser;
       state.isAuthenticated = false;
     }
+  },
+  selectors: {
+    getUser: (state) => state
   }
 });
 
+export const { getUser } = userSlice.selectors;
 export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;

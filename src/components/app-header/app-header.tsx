@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { AppHeaderUI } from '@ui';
 import { useAppSelector } from '../../services/store';
-import { shallowEqual } from 'react-redux';
+import { getUser } from '@slices';
 
 export const AppHeader: FC = () => {
-  const { currentUser } = useAppSelector((store) => store.user, shallowEqual);
+  const { currentUser } = useAppSelector(getUser);
   return <AppHeaderUI userName={currentUser ? currentUser.name : ''} />;
 };
