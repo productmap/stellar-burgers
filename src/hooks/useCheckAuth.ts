@@ -6,13 +6,14 @@ import Cookies from 'js-cookie';
 
 export const useCheckAuth = () => {
   const dispatch = useAppDispatch();
-  const { data: user } = useGetUserQuery();
+  const accessToken = Cookies.get('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const { data: user } = useGetUserQuery(undefined, {
+    skip: !(accessToken && refreshToken) // Если нет токенов, то автозапрос не нужен
+  });
   const { currentUser } = useAppSelector(getUser);
 
   useEffect(() => {
-    const accessToken = Cookies.get('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
-
     // Если нет токенов, то пользователь не авторизован
     if (!accessToken || !refreshToken) return;
 
