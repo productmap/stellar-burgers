@@ -1,5 +1,10 @@
 export const url = 'http://localhost:4000',
+  apiUrl = 'https://norma.nomoreparties.space/api',
   INGREDIENTS_LIST_SELECTOR = '[data-test="ingredients-list"]',
   INGREDIENT_ELEMENT_SELECTOR = '[data-test="ingredient-element"]',
+  INGREDIENT_ELEMENT_NAME = '[data-test="ingredient-element-name"]',
   BURGER_CONSTRUCTOR_SELECTOR = '[data-test="burger-constructor"]',
-  CONSTRUCTOR_ELEMENT_ROW_CLASS = '.constructor-element__row';
+  CONSTRUCTOR_ELEMENT_ROW_CLASS = '.constructor-element__row',
+  MODAL_WINDOW_SELECTOR = '[data-test="modal-window"]',
+  MODAL_INGREDIENT_TITLE = '[data-test="modal-ingredient-title"]',
+  MODAL_CLOSE_BUTTON_SELECTOR = '[data-test="modal-close-button"]';

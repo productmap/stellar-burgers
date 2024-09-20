@@ -1,15 +1,31 @@
 import {
-  url,
   BURGER_CONSTRUCTOR_SELECTOR,
   CONSTRUCTOR_ELEMENT_ROW_CLASS,
   INGREDIENT_ELEMENT_SELECTOR,
-  INGREDIENTS_LIST_SELECTOR
+  INGREDIENT_ELEMENT_NAME,
+  INGREDIENTS_LIST_SELECTOR,
+  MODAL_CLOSE_BUTTON_SELECTOR,
+  MODAL_INGREDIENT_TITLE,
+  MODAL_WINDOW_SELECTOR,
+  url,
+  apiUrl
 } from './constants';
 
 describe('тестирование функциональности конструктора', () => {
-  beforeEach(function () {
+  // перед каждым тестом устанавливаем токены
+  beforeEach(() => {
     cy.visit(url);
     cy.viewport('macbook-15');
+    Cypress.env('ACCESS_TOKEN', '12345678');
+    Cypress.env('REFRESH_TOKEN', '12345678');
+    localStorage.setItem('refreshToken', Cypress.env('REFRESH_TOKEN'));
+    cy.setCookie('accessToken', Cypress.env('ACCESS_TOKEN'));
+  });
+
+  // после каждого теста очищаем localStorage и куки
+  afterEach(() => {
+    localStorage.removeItem('refreshToken');
+    cy.clearCookie('accessToken');
   });
 
   it('Добавление ингредиента из списка ингредиентов в конструктор', () => {
@@ -31,9 +47,34 @@ describe('тестирование функциональности констр
       .should('have.length', 2);
   });
 
-  it('Открытие и закрытие модального окна с описанием ингредиента', () => {});
+  it('Открытие и закрытие модального окна с описанием ингредиента', () => {
+    // получаем списка ингредиентов и первого ингредиента в списке
+    cy.get(INGREDIENTS_LIST_SELECTOR)
+      .find(INGREDIENT_ELEMENT_SELECTOR)
+      .first()
+      .as('firstIngredient');
 
-  it('Отображение в открытом модальном окне данных именно того ингредиента, по которому произошел клик', () => {});
+    // проверя клик на ингредиент
+    cy.get('@firstIngredient').click();
 
-  it('Процесс создания заказа', () => {});
+    cy.get('@firstIngredient')
+      .find(INGREDIENT_ELEMENT_NAME)
+      .invoke('text')
+      .then((ingredientName) => {
+        cy.get(MODAL_WINDOW_SELECTOR)
+          .find(MODAL_INGREDIENT_TITLE)
+          .should('have.text', ingredientName);
+      });
+
+    // закрываем модальное окно
+    cy.get(MODAL_CLOSE_BUTTON_SELECTOR).click();
+  });
+
+  it('Процесс создания заказа', () => {
+    // перехватываем запросы
+    cy.intercept(apiUrl, (req) => {
+      req.headers.authorization = Cypress.env('ACCESS_TOKEN');
+      req.headers.refreshToken = Cypress.env('REFRESH_TOKEN');
+    });
+  });
 });
