@@ -4,8 +4,9 @@ import { burgersApi } from './api/burgersApi';
 import userReducer from './slices/userSlice';
 import burgerSlice from './slices/burgerSlice';
 import orderSlice from './slices/orderSlice';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   [burgersApi.reducerPath]: burgersApi.reducer,
   user: userReducer,
   burger: burgerSlice,
@@ -18,6 +19,8 @@ const store = configureStore({
     getDefaultMiddleware().concat(burgersApi.middleware),
   devTools: process.env.NODE_ENV !== 'production'
 });
+
+setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof store.getState>;
 export const useAppDispatch = () => useDispatch<typeof store.dispatch>();

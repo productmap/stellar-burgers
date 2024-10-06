@@ -62,4 +62,5 @@ export const {
   moveUpIngredient,
   moveDownIngredient
 } = burgerSlice.actions;
+
 export default burgerSlice.reducer;
