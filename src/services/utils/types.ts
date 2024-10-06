@@ -8,19 +8,18 @@ export type TRefreshResponse = TServerResponse<{
   refreshToken: string;
   accessToken: string;
 }>;
+
 export type TIngredientsResponse = TServerResponse<{
   data: TIngredient[];
 }>;
 
 export type TFeedsResponse = TServerResponse<{
-  // data: feeds = { orders: [] },
   orders: TOrder[];
   total: number;
   totalToday: number;
 }>;
 
 export type TOrdersResponse = TServerResponse<{
-  // data: orders = { data: [] },
   data: TOrder[];
 }>;
 

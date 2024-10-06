@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TBurgerSliceState, TConstructorIngredient } from '@utils-types';
 
-const initialState: TBurgerSliceState = {
+export const initialState: TBurgerSliceState = {
   constructorItems: {
     bun: null,
     ingredients: []
@@ -62,4 +62,5 @@ export const {
   moveUpIngredient,
   moveDownIngredient
 } = burgerSlice.actions;
+
 export default burgerSlice.reducer;

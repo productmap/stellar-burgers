@@ -93,6 +93,12 @@ export const burgersApi = createApi({
     }),
     getUser: builder.query<TUserResponse, void>({
       query: () => '/auth/user'
+      // transformResponse: (response: TUserResponse) => {
+      //   if (response.success) {
+      //     return { success: true, user: response.user };
+      //   }
+      //   throw new Error('Failed to get user');
+      // }
     }),
     editUser: builder.mutation<TUserResponse, Partial<TRegisterData>>({
       query: (payload) => ({

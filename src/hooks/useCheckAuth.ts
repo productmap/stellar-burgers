@@ -1,42 +1,25 @@
-import { useCallback, useEffect } from 'react';
-import { useAppDispatch } from '../services/store';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../services/store';
 import { useGetUserQuery } from '../services/api/burgersApi';
-import { clearUser, setUser } from '@slices';
+import { getUser, setUser } from '@slices';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
 
 export const useCheckAuth = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { data: user, error } = useGetUserQuery();
-
-  const handleDispatch = useCallback(
-    (action: any) => {
-      dispatch(action);
-    },
-    [dispatch]
-  );
-
-  const handleNavigate = useCallback(
-    (url: string) => {
-      navigate(url);
-    },
-    [navigate]
-  );
+  const accessToken = Cookies.get('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const { data: user } = useGetUserQuery(undefined, {
+    skip: !(accessToken && refreshToken) // Если нет токенов, то автозапрос не нужен
+  });
+  const { currentUser } = useAppSelector(getUser);
 
   useEffect(() => {
-    const accessToken = Cookies.get('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
+    // Если нет токенов, то пользователь не авторизован
+    if (!accessToken || !refreshToken) return;
 
-    if (!accessToken || !refreshToken) {
-      handleDispatch(clearUser());
-      return;
+    // Если пользователь авторизован, то получаем данные юзера
+    if (user && !currentUser.name) {
+      dispatch(setUser(user));
     }
-
-    if (user) {
-      handleDispatch(setUser(user));
-    } else if (error) {
-      handleNavigate('/login');
-    }
-  }, [user, error, handleDispatch, handleNavigate]);
+  }, [user, currentUser]);
 };

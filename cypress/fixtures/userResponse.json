@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTc4Yzk2MTE5ZDQ1MDAxYjUwNzM3ZSIsImlhdCI6MTcyNjg0ODYwMSwiZXhwIjoxNzI2ODQ5ODAxfQ.UeI7fpX75-r0SThUdUlExnKCObqMoGroXehkOgGpVMQ",
+  "refreshToken": "c2779f2106d296c69df3a9dd4ea5e93f0e6e29895ea499b9f462ffcd4516ec5ce5273f0f7b24e667",
+  "user": {
+    "email": "test@rocket.name",
+    "name": "Жак-Ив Кусто"
+  }
+}

@@ -13,9 +13,13 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": false,
+//    "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["node", "jest"],
+    "types": [
+      "node",
+      "jest",
+      "cypress"
+    ],
     "baseUrl": ".",
     "paths": {
       "@api": ["src/utils/burger-api.ts"],
@@ -28,5 +32,8 @@
       "@utils-types": ["src/utils/types"]
     }
   },
-  "include": ["src"]
+  "include": [
+    "../node_modules/cypress",
+    "./**/*.ts"
+  ]
 }
