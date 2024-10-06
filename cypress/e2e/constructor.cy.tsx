@@ -1,31 +1,23 @@
 import {
+  apiUrl,
   BURGER_CONSTRUCTOR_SELECTOR,
   CONSTRUCTOR_ELEMENT_ROW_CLASS,
-  INGREDIENT_ELEMENT_SELECTOR,
   INGREDIENT_ELEMENT_NAME,
+  INGREDIENT_ELEMENT_SELECTOR,
   INGREDIENTS_LIST_SELECTOR,
   MODAL_CLOSE_BUTTON_SELECTOR,
   MODAL_INGREDIENT_TITLE,
   MODAL_WINDOW_SELECTOR,
-  url,
-  apiUrl
+  MODAL_ORDER_NUMBER,
+  ORDER_BUTTON_SELECTOR,
+  url
 } from './constants';
 
 describe('тестирование функциональности конструктора', () => {
-  // перед каждым тестом устанавливаем токены
+  // перед каждым тестом
   beforeEach(() => {
     cy.visit(url);
     cy.viewport('macbook-15');
-    Cypress.env('ACCESS_TOKEN', '12345678');
-    Cypress.env('REFRESH_TOKEN', '12345678');
-    localStorage.setItem('refreshToken', Cypress.env('REFRESH_TOKEN'));
-    cy.setCookie('accessToken', Cypress.env('ACCESS_TOKEN'));
-  });
-
-  // после каждого теста очищаем localStorage и куки
-  afterEach(() => {
-    localStorage.removeItem('refreshToken');
-    cy.clearCookie('accessToken');
   });
 
   it('Добавление ингредиента из списка ингредиентов в конструктор', () => {
@@ -71,10 +63,60 @@ describe('тестирование функциональности констр
   });
 
   it('Процесс создания заказа', () => {
-    // перехватываем запросы
-    cy.intercept(apiUrl, (req) => {
-      req.headers.authorization = Cypress.env('ACCESS_TOKEN');
-      req.headers.refreshToken = Cypress.env('REFRESH_TOKEN');
-    });
+    // Переходим на страницу логина
+    cy.visit(`${url}/login`);
+
+    // Перехватываем запрос на авторизацию и возвращаем моковый ответ
+    cy.intercept('POST', `${apiUrl}/auth/login`).as('login');
+
+    // Вводим данные для логина
+    cy.get('input[name="email"]').type('test@rocket.name');
+    cy.get('input[name="password"]').type('1234');
+
+    // Нажимаем кнопку логина
+    cy.get('button[type="submit"]').click();
+
+    // Ждем, пока запрос на авторизацию завершится
+    cy.wait('@login');
+
+    // Проверяем, что перенаправлены на главную страницу
+    cy.url().should('include', '/');
+
+    // получаем списка ингредиентов и первого ингредиента в списке
+    cy.get(INGREDIENTS_LIST_SELECTOR)
+      .find(INGREDIENT_ELEMENT_SELECTOR)
+      .first()
+      .as('firstIngredient');
+
+    // добавляем первую булку в конструктор
+    cy.get('@firstIngredient').find('button').click();
+
+    // отправляем заказ
+    cy.get(ORDER_BUTTON_SELECTOR).click();
+
+    // перехватываем запрос на создание заказа и возвращаем моковый ответ
+    cy.intercept('POST', `${apiUrl}/orders`, {
+      fixture: 'orderResponse.json'
+    }).as('order');
+
+    // Ждем, пока запрос заказа обработается
+    cy.wait('@order');
+
+    // Проверяем, что номер заказа совпадает с номером из ответа
+    cy.get(MODAL_ORDER_NUMBER).should('not.be.empty');
+    cy.get(MODAL_ORDER_NUMBER);
+
+    // закрываем модальное окно
+    cy.get(MODAL_CLOSE_BUTTON_SELECTOR).last().should('be.visible').click();
+
+    // проверяем что конструктор пустой
+    cy.get(BURGER_CONSTRUCTOR_SELECTOR).as('burgerConstructor');
+    cy.get('@burgerConstructor')
+      .find(CONSTRUCTOR_ELEMENT_ROW_CLASS)
+      .should('have.length', 0);
+
+    // очищаем localStorage и куки
+    localStorage.removeItem('refreshToken');
+    cy.clearCookie('accessToken');
   });
 });

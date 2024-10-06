@@ -7,4 +7,6 @@ export const url = 'http://localhost:4000',
   CONSTRUCTOR_ELEMENT_ROW_CLASS = '.constructor-element__row',
   MODAL_WINDOW_SELECTOR = '[data-test="modal-window"]',
   MODAL_INGREDIENT_TITLE = '[data-test="modal-ingredient-title"]',
-  MODAL_CLOSE_BUTTON_SELECTOR = '[data-test="modal-close-button"]';
+  MODAL_CLOSE_BUTTON_SELECTOR = '[data-test="modal-close-button"]',
+  MODAL_ORDER_NUMBER = '[data-test="modal-order-number"]',
+  ORDER_BUTTON_SELECTOR = '[data-test="order-button"]';
