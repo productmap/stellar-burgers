@@ -26,3 +26,4 @@ yarn.lock
 /coverage/clover.xml
 /coverage/coverage-final.json
 /coverage/lcov.info
+/coverage/lcov-report/burgerSlice.ts.html
